@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بث المباريات الخاص</title>
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .player-container { width: 100%; max-width: 800px; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .channels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; width: 100%; max-width: 800px; margin-top: 20px; }
+        button { background: #1f1f1f; color: #00ff88; border: 1px solid #333; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        button:hover { background: #00ff88; color: #000; }
+        .active { background: #00ff88 !important; color: #000 !important; }
+    </style>
+</head>
+<body>
+
+    <h2>⚽ منصة البث الخاصة ⚽</h2>
+
+    <div class="player-container">
+        <video id="my-video" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" data-setup='{}'>
+            <source id="video-source" src="" type="application/x-mpegURL">
+        </video>
+    </div>
+
+    <div class="channels-grid">
+        <button onclick="playStream('https://iptv-org.github.io/iptv/categories/sports.m3u', this)">قنوات رياضية 1</button>
+        <button onclick="playStream('رابط_آخر_هنا', this)">قناة 2</button>
+        <button onclick="playStream('رابط_آخر_هنا', this)">قناة 3</button>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script>
+        var player = videojs('my-video');
+        function playStream(url, btn) {
+            player.src({ src: url, type: 'application/x-mpegURL' });
+            player.play();
+            
+            // تمييز الزر المختار
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>
