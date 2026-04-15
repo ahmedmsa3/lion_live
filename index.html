@@ -3,41 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بث المباريات الخاص</title>
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <title>Lion Live - منصة بث المباريات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    
     <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .player-container { width: 100%; max-width: 800px; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .channels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; width: 100%; max-width: 800px; margin-top: 20px; }
-        button { background: #1f1f1f; color: #00ff88; border: 1px solid #333; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: bold; }
-        button:hover { background: #00ff88; color: #000; }
-        .active { background: #00ff88 !important; color: #000 !important; }
+        body { 
+            background-color: #0f1115; 
+            color: #e0e6ed; 
+            font-family: 'Tajawal', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+
+        /* تنسيق اسم الموقع LION_LIVE واللوجو */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        h1 { 
+            color: #f1c40f; /* لون ذهبي */
+            font-weight: 700;
+            margin: 0;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(241, 196, 15, 0.3);
+        }
+        .lion-icon {
+            font-size: 2.5em;
+        }
+
+        /* حاوية مشغل الفيديو */
+        .player-container { 
+            width: 100%; 
+            max-width: 850px; 
+            background: #000; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border: 2px solid #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* شبكة أزرار القنوات */
+        .channels-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 850px; 
+        }
+
+        /* تنسيق الأزرار */
+        button { 
+            background-color: #1a1e26; 
+            color: #00e676; /* لون أخضر فائق */
+            border: 1px solid #34495e; 
+            padding: 18px 10px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            font-weight: 500;
+            font-size: 1em;
+            text-align: center;
+        }
+        
+        /* تأثيرات الأزرار عند تمرير الماوس */
+        button:hover { 
+            background-color: #00e676; 
+            color: #0f1115;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.2);
+            border-color: #00e676;
+        }
+        
+        /* تأثير الزر عند النقر عليه (الزر النشط) */
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .active { 
+            background-color: #00e676 !important; 
+            color: #0f1115 !important; 
+            border-color: #00e676 !important;
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3) !important;
+        }
+        
     </style>
 </head>
 <body>
 
-    <h2>⚽ منصة البث الخاصة ⚽</h2>
+    <header>
+        <span class="lion-icon">🦁</span>
+        <h1>LION_LIVE</h1>
+    </header>
 
     <div class="player-container">
-        <video id="my-video" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" data-setup='{}'>
+        <video id="player" playsinline controls>
             <source id="video-source" src="" type="application/x-mpegURL">
         </video>
     </div>
 
     <div class="channels-grid">
-        <button onclick="playStream('https://iptv-org.github.io/iptv/categories/sports.m3u', this)">قنوات رياضية 1</button>
-        <button onclick="playStream('رابط_آخر_هنا', this)">قناة 2</button>
-        <button onclick="playStream('رابط_آخر_هنا', this)">قناة 3</button>
+        <button onclick="playStream('https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', this)">قنوات رياضية 1 (تجريبي)</button>
+        <button onclick="playStream('https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8', this)">قناة 2 (تجريبي)</button>
+        <button onclick="playStream('https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8', this)">قناة 3 (تجريبي)</button>
     </div>
 
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        var player = videojs('my-video');
+        const video = document.getElementById('player');
+        
+        // إعداد Plyr
+        const player = new Plyr(video, {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+            title: 'Lion Live Player'
+        });
+
+        const hls = new Hls();
+        const sourceElement = document.getElementById('video-source');
+
         function playStream(url, btn) {
-            player.src({ src: url, type: 'application/x-mpegURL' });
-            player.play();
+            if (Hls.isSupported()) {
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // دعم أجهزة أبل
+                sourceElement.src = url;
+                video.play();
+            } else {
+                alert("عذراً، متصفحك لا يدعم هذا النوع من البث.");
+            }
             
-            // تمييز الزر المختار
+            // تمييز الزر المختار (النشط)
             document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         }
